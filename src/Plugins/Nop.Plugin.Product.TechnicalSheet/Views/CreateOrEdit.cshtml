@@ -1,0 +1,38 @@
+@model Nop.Plugin.Product.TechnicalSheet.Models.ProductTechnicalSheetModel
+
+@{
+    ViewData["Title"] = Model.Id > 0 ? T("Admin.ProductTechnicalSheet.EditPage").Text : T("Admin.ProductTechnicalSheet.Create").Text;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="CreateOrEdit" method="post">
+
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="ProductId" />
+
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TechnicalCode"></label>
+        <input asp-for="TechnicalCode" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        @T("Admin.ProductTechnicalSheet.Save")
+    </button>
+
+    <a class="btn btn-secondary"
+       href="@Url.Action("List", new { productId = Model.ProductId })">
+        @T("Admin.ProductTechnicalSheet.BackToList")
+    </a>
+
+</form>

@@ -1,0 +1,85 @@
+@model IList<Nop.Plugin.Product.TechnicalSheet.Domain.ProductTechnicalSheet>
+
+@{
+    var productId = ViewBag.ProductId;
+}
+
+<h2>@T("Admin.ProductTechnicalSheet.List")</h2>
+
+<div class="content-header clearfix">
+    <div class="float-right">
+        <a class="btn btn-primary"
+           href="@Url.Action("CreateOrEdit", new { productId = productId })">
+            @T("Admin.ProductTechnicalSheet.AddNew")
+        </a>
+    </div>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>@T("Admin.ProductTechnicalSheet.Fields.Title")</th>
+            <th>@T("Admin.ProductTechnicalSheet.Fields.TechnicalCode")</th>
+            <th>@T("Admin.ProductTechnicalSheet.Fields.Description")</th>
+            <th>@T("Admin.Common.Action")</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <tr id="row-@item.Id">
+                <td>@item.Title</td>
+                <td>@item.TechnicalCode</td>
+                <td>@item.Description</td>
+                <td>
+                    <a href="@Url.Action("CreateOrEdit", new { id = item.Id })">
+                        @T("Admin.ProductTechnicalSheet.Edit")
+                    </a>
+                    |
+                    <a href="javascript:void(0);"
+                       class="text-danger"
+                       onclick="deleteTechnicalSheet(@item.Id)">
+                        @T("Admin.ProductTechnicalSheet.Delete")
+                    </a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="4">@T("Admin.ProductTechnicalSheet.NoRecords")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<script>
+    function deleteTechnicalSheet(id) {
+
+        if (!confirm('@T("Admin.Common.AreYouSure")'))
+            return;
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Delete")',
+            data: { id: id },
+            success: function (response) {
+
+                if (response.success) {
+
+                    $("#row-" + id).remove();
+
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert('@T("Admin.Common.Error")');
+            }
+        });
+    }
+</script>
