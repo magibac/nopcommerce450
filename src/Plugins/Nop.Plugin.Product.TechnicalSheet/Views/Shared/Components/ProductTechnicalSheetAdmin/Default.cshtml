@@ -1,0 +1,50 @@
+@model IList<Nop.Plugin.Product.TechnicalSheet.Domain.ProductTechnicalSheet>
+
+<nop-card asp-name="product-technical-sheets" asp-icon="fas fa-file-alt" asp-title="@T("Admin.ProductTechnicalSheet.List")" asp-hide-block-attribute-name="TechnicalSheet.HideProductBlock" asp-hide="false" asp-advanced="false">
+    <div class="card-body">
+        <div class="content-header clearfix">
+            <div class="float-right">
+                <a class="btn btn-primary" href="@Url.Action("CreateOrEdit", "ProductTechnicalSheet", new { productId = ViewContext.HttpContext.Request.RouteValues["id"] })">
+                    @T("Admin.ProductTechnicalSheet.AddNew")
+                </a>
+            </div>
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>@T("Admin.ProductTechnicalSheet.Fields.Title")</th>
+                        <th>@T("Admin.ProductTechnicalSheet.Fields.TechnicalCode")</th>
+                        <th>@T("Admin.ProductTechnicalSheet.Fields.Description")</th>
+                        <th>@T("Admin.Common.Action")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.TechnicalCode</td>
+                            <td>@item.Description</td>
+                            <td>
+                                <a href="@Url.Action("CreateOrEdit", "ProductTechnicalSheet", new { id = item.Id })" class="btn btn-sm btn-primary">
+                                    @T("Admin.ProductTechnicalSheet.Edit")
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="card card-default no-margin">
+                <div class="card-body">
+                    @T("Admin.ProductTechnicalSheet.NoRecords")
+                </div>
+            </div>
+        }
+    </div>
+</nop-card>

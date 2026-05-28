@@ -1,43 +1,53 @@
-﻿using Nop.Plugin.Product.TechnicalSheet.Domain;
+﻿using Nop.Core;
+using Nop.Plugin.Product.TechnicalSheet.Domain;
 
 namespace Nop.Plugin.Product.TechnicalSheet.Services;
 
+/// <summary>
+/// Interfaccia del service per la gestione delle schede tecniche prodotto.
+/// Definisce le operazioni di accesso dati disponibili per il layer controller e factory.
+/// </summary>
 public interface IProductTechnicalSheetService
 {
     /// <summary>
-    /// Ottieni liste tecniche per productId
+    /// Recupera una lista paginata di schede tecniche associate a un prodotto.
+    /// Utilizzata dalla griglia DataTables per la paginazione lato server.
     /// </summary>
-    /// <param name="productId"></param>
-    /// <returns></returns>
+    /// <param name="productId">Identificativo del prodotto</param>
+    /// <param name="pageIndex">Indice di pagina (base 0)</param>
+    /// <param name="pageSize">Numero di elementi per pagina</param>
+    /// <returns>Lista paginata di schede tecniche</returns>
+    Task<IPagedList<ProductTechnicalSheet>> GetPagedByProductIdAsync(int productId, int pageIndex, int pageSize);
+
+    /// <summary>
+    /// Recupera tutte le schede tecniche associate a un prodotto
+    /// </summary>
+    /// <param name="productId">Identificativo del prodotto</param>
+    /// <returns>Lista completa di schede tecniche (non paginata)</returns>
     Task<IList<ProductTechnicalSheet>> GetByProductIdAsync(int productId);
 
     /// <summary>
-    /// Ottieni scheda tecnica per id
+    /// Recupera una singola scheda tecnica per identificativo
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Identificativo della scheda tecnica</param>
+    /// <returns>Entity della scheda tecnica o null se non trovata</returns>
     Task<ProductTechnicalSheet> GetByIdAsync(int id);
 
     /// <summary>
-    /// Inserimento Scheda
+    /// Inserisce una nuova scheda tecnica nel database
     /// </summary>
-    /// <param name="sheet"></param>
-    /// <returns></returns>
+    /// <param name="sheet">Entity della scheda tecnica da inserire</param>
     Task InsertAsync(ProductTechnicalSheet sheet);
 
     /// <summary>
-    /// Aggionamento Scheda
+    /// Aggiorna una scheda tecnica esistente nel database
     /// </summary>
-    /// <param name="sheet"></param>
-    /// <returns></returns>
+    /// <param name="sheet">Entity della scheda tecnica con i dati aggiornati</param>
     Task UpdateAsync(ProductTechnicalSheet sheet);
 
     /// <summary>
-    /// Elimina Scheda
+    /// Elimina una scheda tecnica dal database
     /// </summary>
-    /// <param name="sheet"></param>
-    /// <returns></returns>
+    /// <param name="sheet">Entity della scheda tecnica da eliminare</param>
     Task DeleteAsync(ProductTechnicalSheet sheet);
-
-
 }
