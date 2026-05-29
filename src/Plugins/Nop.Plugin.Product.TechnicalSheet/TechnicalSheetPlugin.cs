@@ -1,44 +1,35 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Routing;
 using Nop.Plugin.Product.TechnicalSheet.Infrastructure;
 using Nop.Services.Cms;
 using Nop.Services.Localization;
 using Nop.Services.Plugins;
-using Nop.Services.Security;
-using Nop.Web.Framework;
 using Nop.Web.Framework.Infrastructure;
-using Nop.Web.Framework.Menu;
 
 namespace Nop.Plugin.Product.TechnicalSheet;
 
 /// <summary>
 /// Plugin principale per la gestione delle schede tecniche prodotto.
-/// Implementa IWidgetPlugin per l'integrazione nella pagina prodotto (tab aggiuntivo)
-/// e IAdminMenuPlugin per la voce nel menu amministrativo.
+/// Implementa IWidgetPlugin per l'integrazione nella pagina prodotto (tab aggiuntivo).
 /// Gestisce l'installazione/disinstallazione delle risorse localizzate.
 /// </summary>
-public class TechnicalSheetPlugin : BasePlugin, IWidgetPlugin, IAdminMenuPlugin
+public class TechnicalSheetPlugin : BasePlugin, IWidgetPlugin
 {
     private readonly ILocalizationService _localizationService;
     private readonly ILanguageService _languageService;
-    private readonly IPermissionService _permissionService;
 
     /// <summary>
     /// Costruttore con dependency injection
     /// </summary>
     /// <param name="localizationService">Service per la gestione delle risorse localizzate</param>
     /// <param name="languageService">Service per la gestione delle lingue disponibili</param>
-    /// <param name="permissionService">Service per la verifica dei permessi</param>
     public TechnicalSheetPlugin(
         ILocalizationService localizationService,
-        ILanguageService languageService,
-        IPermissionService permissionService)
+        ILanguageService languageService)
     {
         _localizationService = localizationService;
         _languageService = languageService;
-        _permissionService = permissionService;
     }
 
     /// <summary>
@@ -72,30 +63,6 @@ public class TechnicalSheetPlugin : BasePlugin, IWidgetPlugin, IAdminMenuPlugin
         return TechnicalSheetDefaults.AdminViewComponentName;
 
         return null;
-    }
-
-    /// <summary>
-    /// Aggiunge la voce "Schede Tecniche" nel menu amministrativo sotto "Third party plugins".
-    /// La voce viene mostrata solo per gli utenti con permesso ManageTechnicalSheets.
-    /// </summary>
-    /// <param name="rootNode">Nodo radice della sitemap amministrativa</param>
-    public async Task ManageSiteMapAsync(SiteMapNode rootNode)
-    {
-        var pluginNode = rootNode.ChildNodes.FirstOrDefault(node => node.SystemName.Equals("Catalog"));
-
-        if (pluginNode == null)
-            return;
-
-        pluginNode.ChildNodes.Add(new SiteMapNode
-        {
-            SystemName = "Product.TechnicalSheet",
-            Title = await _localizationService.GetResourceAsync("Admin.ProductTechnicalSheet.Menu"),
-            ControllerName = "ProductTechnicalSheet",
-            ActionName = "List",
-            RouteValues = new RouteValueDictionary { { "area", AreaNames.Admin } },
-            IconClass = "fas fa-file-alt",
-            Visible = true
-        });
     }
 
     /// <summary>

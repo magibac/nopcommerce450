@@ -21,7 +21,7 @@ public class NopStartup : INopStartup
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IProductTechnicalSheetService, ProductTechnicalSheetService>();
-        services.AddScoped<IProductTechnicalSheetModelFactory, ProductTechnicalSheetModelFactory>();
+        //services.AddScoped<IProductTechnicalSheetModelFactory, ProductTechnicalSheetModelFactory>();
     }
 
     /// <summary>

@@ -1,9 +1,11 @@
 @model Nop.Plugin.Product.TechnicalSheet.Models.ProductTechnicalSheetModel
 
 @{
+
+    Layout = "_AdminLayout";
+    
     var title = Model.Id > 0 ? T("Admin.ProductTechnicalSheet.EditPage").Text : T("Admin.ProductTechnicalSheet.Create").Text;
     ViewBag.PageTitle = title;
-    NopHtml.SetActiveMenuItemSystemName("Product.TechnicalSheet");
 }
 
 <form asp-action="CreateOrEdit" method="post">
@@ -16,7 +18,7 @@
             @title
             <small>
                 <i class="fas fa-arrow-circle-left"></i>
-                <a asp-action="List" asp-route-productId="@Model.ProductId">@T("Admin.ProductTechnicalSheet.BackToList")</a>
+                <a asp-action="Edit" asp-controller="Product" asp-route-id="@Model.ProductId">@T("Admin.ProductTechnicalSheet.BackToList")</a>
             </small>
         </h1>
         <div class="float-right">

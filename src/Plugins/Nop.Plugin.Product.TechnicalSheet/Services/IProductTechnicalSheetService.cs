@@ -10,16 +10,6 @@ namespace Nop.Plugin.Product.TechnicalSheet.Services;
 public interface IProductTechnicalSheetService
 {
     /// <summary>
-    /// Recupera una lista paginata di schede tecniche associate a un prodotto.
-    /// Utilizzata dalla griglia DataTables per la paginazione lato server.
-    /// </summary>
-    /// <param name="productId">Identificativo del prodotto</param>
-    /// <param name="pageIndex">Indice di pagina (base 0)</param>
-    /// <param name="pageSize">Numero di elementi per pagina</param>
-    /// <returns>Lista paginata di schede tecniche</returns>
-    Task<IPagedList<ProductTechnicalSheet>> GetPagedByProductIdAsync(int productId, int pageIndex, int pageSize);
-
-    /// <summary>
     /// Recupera tutte le schede tecniche associate a un prodotto
     /// </summary>
     /// <param name="productId">Identificativo del prodotto</param>

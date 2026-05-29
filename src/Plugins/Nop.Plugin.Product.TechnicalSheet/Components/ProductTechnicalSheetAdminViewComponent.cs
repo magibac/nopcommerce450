@@ -47,8 +47,8 @@ public class ProductTechnicalSheetAdminViewComponent : NopViewComponent
         if (model == null)
             return Content(string.Empty);
 
-        if (!await _permissionService.AuthorizeAsync(PermissionProvider.ManageTechnicalSheets))
-            return Content(string.Empty);
+        // if (!await _permissionService.AuthorizeAsync(PermissionProvider.ManageTechnicalSheets))
+        //     return Content(string.Empty);
 
         var sheets = await _productTechnicalSheetService.GetByProductIdAsync((int)model.Id);
 

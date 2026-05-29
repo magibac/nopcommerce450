@@ -23,22 +23,6 @@ public class ProductTechnicalSheetService : IProductTechnicalSheetService
     }
 
     /// <summary>
-    /// Recupera una lista paginata di schede tecniche filtrate per prodotto.
-    /// La paginazione avviene direttamente sul database tramite il repository, ottimizzando il caricamento dei dati.
-    /// </summary>
-    /// <param name="productId">Identificativo del prodotto</param>
-    /// <param name="pageIndex">Indice di pagina (base 0)</param>
-    /// <param name="pageSize">Elementi per pagina</param>
-    /// <returns>Lista paginata di schede tecniche</returns>
-    public async Task<IPagedList<ProductTechnicalSheet>> GetPagedByProductIdAsync(int productId, int pageIndex, int pageSize)
-    {
-        return await _productTechnicalSheetRepository.GetAllPagedAsync(
-            query => query.Where(x => x.ProductId == productId),
-            pageIndex,
-            pageSize);
-    }
-
-    /// <summary>
     /// Recupera una singola scheda tecnica tramite il suo identificativo
     /// </summary>
     /// <param name="id">Identificativo della scheda tecnica</param>
